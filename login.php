@@ -2,6 +2,7 @@
 include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    session_start();
     $email = $_POST['email'];
     $pass  = $_POST['password'];
 
@@ -13,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['role']    = $user['role'];
         $_SESSION['name']    = $user['name'];
+
+
 
         if ($user['role'] == 'admin') {
             header("Location: admin_dashboard.php");
