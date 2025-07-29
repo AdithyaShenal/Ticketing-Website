@@ -83,12 +83,13 @@
 
                     recalculateTotal();
 
-                    if (document.querySelectorAll('.list-group-item').length === 0) {
+                    const remainingItems = document.querySelectorAll('.list-group-item[data-price]').length;
+                    updateCartCount(remainingItems);
+
+                    if (remainingItems === 0) {
                         const listGroup = document.querySelector('.list-group');
                         listGroup.innerHTML = '<div class="list-group-item text-center text-muted">Your cart is empty.</div>';
-
-                        // Optionally clear summary
-                        document.querySelector('.border-top').remove();
+                        document.querySelector('.border-top')?.remove();
                     }
                 } else {
                     alert('Failed to remove item from cart.');
@@ -123,5 +124,13 @@
         if (totalEl) {
             totalEl.innerText = `$${total.toFixed(2)}`;
         }
+    }
+
+    function updateCartCount(count) {
+        const badge = document.getElementById('cart-count-badge');
+        if (badge) {
+            badge.textContent = count;
+        }
+ console.log("Cart count updated to: " + count);
     }
 </script>

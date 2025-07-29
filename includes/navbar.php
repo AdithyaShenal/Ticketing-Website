@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -13,15 +12,14 @@ $userRole = $_SESSION['role'] ?? null;
     <a href="index.php">Browse events</a>
     <a href="#">Help</a>
 
-    <!-- 🛒 Cart Icon (Opens Sidebar) -->
     <a class="" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" style="position: relative;">
       🛒 Cart
-      <span class="badge bg-primary" style="position: absolute; top: -18px; right: -10px;">
+      <span id="cart-count-badge" class="badge bg-primary" style="position: absolute; top: -18px; right: -10px;">
         <?php
-          $cart = isset($_COOKIE['cart']) ? json_decode($_COOKIE['cart'], true) : [];
-          echo count($cart);
+        echo isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
         ?>
       </span>
+
     </a>
 
 
