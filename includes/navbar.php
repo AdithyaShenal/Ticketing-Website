@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -13,6 +12,17 @@ $userRole = $_SESSION['role'] ?? null;
     <a href="index.php">Browse events</a>
     <a href="#">Help</a>
 
+    <a class="" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" style="position: relative;">
+      🛒 Cart
+      <span id="cart-count-badge" class="badge bg-primary" style="position: absolute; top: -18px; right: -10px;">
+        <?php
+        echo isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
+        ?>
+      </span>
+
+    </a>
+
+
     <?php if ($loggedIn): ?>
       <a href="#">Profile</a>
       <?php if ($userRole === 'admin'): ?>
@@ -20,8 +30,7 @@ $userRole = $_SESSION['role'] ?? null;
       <?php endif; ?>
       <a href="logout.php">Logout</a>
     <?php else: ?>
-      <a href="Ticketing-Website/login.php">Login</a>
-      
+      <a href="login.php">Login</a>
     <?php endif; ?>
   </nav>
 </header>

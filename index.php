@@ -1,6 +1,6 @@
-
 <?php
-require_once 'config.php';
+// require_once 'config.php';
+require_once 'db.php';
 require_once 'includes/layout.php';
 
 
@@ -8,13 +8,13 @@ $selectedCategory = $_GET['category'] ?? null;
 
 // Prepare SQL query
 if ($selectedCategory) {
-    $stmt = $pdo->prepare("SELECT id, title, location, event_date, thumbnail_url, category 
+  $stmt = $pdo->prepare("SELECT id, title, location, event_date, thumbnail_url, category 
                            FROM events 
                            WHERE featured = 1 AND category = :category 
                            ORDER BY event_date ASC");
-    $stmt->execute(['category' => $selectedCategory]);
+  $stmt->execute(['category' => $selectedCategory]);
 } else {
-    $stmt = $pdo->query("SELECT id, title, location, event_date, thumbnail_url, category 
+  $stmt = $pdo->query("SELECT id, title, location, event_date, thumbnail_url, category 
                          FROM events 
                          WHERE featured = 1 
                          ORDER BY event_date ASC");
@@ -54,14 +54,17 @@ ob_start();
           <div class="thumbnail" style="background-image: url('<?php echo htmlspecialchars($event['thumbnail_url']); ?>');"></div>
           <h3><?php echo htmlspecialchars($event['title']); ?></h3>
           <p><?php echo htmlspecialchars($event['location']) . ' - ' . date('d/m/Y', strtotime($event['event_date'])); ?></p>
-          <button class="buy">Buy Tickets</button>
+          <form method="POST" action="add_cart.php">
+            <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
+            <button type="submit" class="buy">Buy Tickets</button>
+          </form>
         </div>
       <?php endforeach; ?>
     <?php endif; ?>
   </div>
 </section>
 
-  
+
 
 
 
