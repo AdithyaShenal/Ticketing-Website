@@ -6,47 +6,122 @@
     <div class="offcanvas-body">
         <div class="container-fluid p-0">
             <div class="list-group mb-4">
-                <div class="list-group-item d-flex justify-content-between align-items-start">
-                    <div>
-                        <div class="fw-semibold">Concert A - VIP</div>
-                        <small class="text-muted d-block">Date: Aug 10, 2025</small>
-                        <small class="text-muted d-block">Seat: A12</small>
-                        <button class="btn btn-sm text-danger p-0 mt-1">
-                            <i class="bi bi-trash"></i> Remove
-                        </button>
-                    </div>
-                    <div class="text-end">
-                        <div class="input-group input-group-sm mb-2" style="width: 110px;">
-                            <button class="btn btn-outline-secondary" type="button">-</button>
-                            <input type="text" class="form-control text-center" value="1">
-                            <button class="btn btn-outline-secondary" type="button">+</button>
+                <?php
+                $subtotal = 0;
+
+                if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])):
+                    foreach ($_SESSION['cart'] as $item):
+                        $itemTotal = 120 * $item['quantity']; // Replace 120 with dynamic item price if needed
+                        $subtotal += $itemTotal;
+                ?>
+                        <div class="list-group-item d-flex justify-content-between align-items-start" id="cart-item-<?= $item['id'] ?>" data-price="<?= $item['price'] ?>">
+                            <div>
+                                <div class="fw-semibold"><?= htmlspecialchars($item['title']) ?></div>
+                                <small class="text-muted d-block">Date: <?= htmlspecialchars(date('M d, Y', strtotime($item['event_date']))) ?></small>
+                                <small class="text-muted d-block">Location: <?= htmlspecialchars($item['location']) ?></small>
+                                <button class="btn btn-sm text-danger p-0 mt-1" onclick="removeFromCart(<?= $item['id'] ?>)">
+                                    <i class="bi bi-trash"></i> Remove
+                                </button>
+                            </div>
+                            <div class="text-end">
+                                <div class="input-group input-group-sm mb-2" style="width: 110px;">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="updateCartQuantity(<?= $item['id'] ?>, -1)">-</button>
+                                    <input type="text" class="form-control text-center" value="<?= $item['quantity'] ?>" readonly>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="updateCartQuantity(<?= $item['id'] ?>, 1)">+</button>
+                                </div>
+                                <span class="fw-bold">$<?= number_format($itemTotal, 2) ?></span>
+                            </div>
                         </div>
-                        <span class="fw-bold">$120</span>
+                    <?php
+                    endforeach;
+                else:
+                    ?>
+                    <div class="list-group-item text-center text-muted">Your cart is empty.</div>
+                <?php endif; ?>
+            </div>
+
+            <?php if (!empty($_SESSION['cart'])):
+                $serviceFee = 5;
+                $total = $subtotal + $serviceFee;
+            ?>
+                <!-- Cart Summary -->
+                <div class="border-top pt-3">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal</span>
+                        <span id="subtotal" data-value="<?= $subtotal ?>">$<?= number_format($subtotal, 2) ?></span>
                     </div>
-                </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Service Fee</span>
+                        <span id="service-fee" data-value="<?= $serviceFee ?>">$<?= number_format($serviceFee, 2) ?></span>
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold border-top pt-2">
+                        <span>Total</span>
+                        <span id="total">$<?= number_format($total, 2) ?></span>
+                    </div>
 
-                <!-- Repeat for each item -->
-            </div>
 
-            <!-- Cart Summary -->
-            <div class="border-top pt-3">
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Subtotal</span>
-                    <span>$120</span>
+                    <!-- Checkout Buttons -->
+                    <button class="btn btn-primary w-100 mt-4">Proceed to Checkout</button>
+                    <button class="btn btn-outline-secondary w-100 mt-2" data-bs-dismiss="offcanvas">Continue Browsing</button>
                 </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Service Fee</span>
-                    <span>$5</span>
-                </div>
-                <div class="d-flex justify-content-between fw-bold border-top pt-2">
-                    <span>Total</span>
-                    <span>$125</span>
-                </div>
-                <!-- Checkout Buttons -->
-                <button class="btn btn-primary w-100 mt-4">Proceed to Checkout</button>
-                <button class="btn btn-outline-secondary w-100 mt-2" data-bs-dismiss="offcanvas">Continue Browsing</button>
-            </div>
+            <?php endif; ?>
         </div>
-
     </div>
 </div>
+
+
+<script>
+    function removeFromCart(id) {
+        if (!confirm("Remove this item from your cart?")) return;
+
+        fetch('./remove_from_cart.php?id=' + id)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const el = document.getElementById('cart-item-' + id);
+                    if (el) el.remove();
+
+                    recalculateTotal();
+
+                    if (document.querySelectorAll('.list-group-item').length === 0) {
+                        const listGroup = document.querySelector('.list-group');
+                        listGroup.innerHTML = '<div class="list-group-item text-center text-muted">Your cart is empty.</div>';
+
+                        // Optionally clear summary
+                        document.querySelector('.border-top').remove();
+                    }
+                } else {
+                    alert('Failed to remove item from cart.');
+                }
+            })
+            .catch(err => {
+                console.error('Error:', err);
+                alert('Error removing item.');
+            });
+    }
+
+    function recalculateTotal() {
+        let subtotal = 0;
+
+        document.querySelectorAll('.list-group-item[data-price]').forEach(item => {
+            const price = parseFloat(item.getAttribute('data-price'));
+            const quantity = parseInt(item.querySelector('input.form-control').value);
+            subtotal += price * quantity;
+        });
+
+        const serviceFee = parseFloat(document.getElementById('service-fee')?.dataset.value || 0);
+        const total = subtotal + serviceFee;
+
+        const subtotalEl = document.getElementById('subtotal');
+        const totalEl = document.getElementById('total');
+
+        if (subtotalEl) {
+            subtotalEl.dataset.value = subtotal;
+            subtotalEl.innerText = `$${subtotal.toFixed(2)}`;
+        }
+
+        if (totalEl) {
+            totalEl.innerText = `$${total.toFixed(2)}`;
+        }
+    }
+</script>
