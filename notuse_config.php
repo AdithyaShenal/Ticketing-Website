@@ -5,7 +5,7 @@ $host = 'localhost';
 $db = 'ticketlist_db'; 
 $user = 'root';
 $pass = '';
-$port = 3307;
+$port = 3306;
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
