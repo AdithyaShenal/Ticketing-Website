@@ -1,9 +1,9 @@
 <?php
 $host = 'localhost';
-$port = 3306;
+$port = 3307;
 $user = 'root';
 $pass = '';
-$db = 'ticketing_system';
+$db = 'ticketlist_db';
 
 try {
     $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db;port=$port", $user, $pass);

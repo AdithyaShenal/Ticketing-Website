@@ -39,6 +39,10 @@ ob_start();
   <a href="index.php?category=music" class="category-btn">Music</a>
   <a href="index.php?category=movie" class="category-btn">Movie</a>
   <a href="index.php?category=concert" class="category-btn">Concert</a>
+  <a href="index.php?category=festival" class="category-btn">Festivals</a>
+
+
+  
 </section>
 
 
