@@ -134,3 +134,51 @@
  console.log("Cart count updated to: " + count);
     }
 </script>
+<style>
+    .offcanvas.offcanvas-end {
+        background: rgba(255, 255, 255, 0.15); /* semi-transparent white */
+        backdrop-filter: blur(10px);           /* blur for frosted effect */
+        -webkit-backdrop-filter: blur(10px);   /* Safari support */
+        border-left: 1px solid rgba(255, 255, 255, 0.3); /* subtle border */
+        color: #fff; /* white text for contrast, can be adjusted */
+    }
+
+    .offcanvas-title,
+    .offcanvas-body,
+    .list-group-item,
+    .btn,
+    .form-control {
+        background: transparent !important;
+        color: #fff;
+    }
+
+    .list-group-item {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+    }
+
+    .btn-outline-secondary {
+        border-color: rgba(255, 255, 255, 0.5);
+        color: #fff;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .form-control {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+    }
+
+    /* Optional: Scrollbar customization */
+    .offcanvas-body::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .offcanvas-body::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+    }
+</style>

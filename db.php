@@ -3,7 +3,7 @@ $host = 'localhost';
 $port = 3306;
 $user = 'root';
 $pass = '';
-$db = 'ticketlist_db';
+$db = 'ticketing_system';
 
 try {
     $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db;port=$port", $user, $pass);
