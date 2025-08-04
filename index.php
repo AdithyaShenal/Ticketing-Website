@@ -2,7 +2,10 @@
 // require_once 'config.php';
 require_once 'db.php';
 require_once 'includes/layout.php';
-
+if (isset($_SESSION['success_message'])) {
+    echo '<div class="alert alert-success text-center m-3">' . htmlspecialchars($_SESSION['success_message']) . '</div>';
+    unset($_SESSION['success_message']); // Clear after displaying
+}
 
 $selectedCategory = $_GET['category'] ?? null;
 

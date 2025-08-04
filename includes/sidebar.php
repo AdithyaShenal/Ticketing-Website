@@ -1,3 +1,9 @@
+<!-- Bootstrap & jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasExampleLabel">Your Cart</h5>
@@ -61,13 +67,15 @@
 
 
                     <!-- Checkout Buttons -->
-                    <button class="btn btn-primary w-100 mt-4">Proceed to Checkout</button>
+                    <a href="./checkout.php" class="btn btn-primary w-100 mt-4">Proceed to Checkout</a>
                     <button class="btn btn-outline-secondary w-100 mt-2" data-bs-dismiss="offcanvas">Continue Browsing</button>
                 </div>
             <?php endif; ?>
         </div>
     </div>
 </div>
+
+
 
 
 <script>
@@ -131,16 +139,21 @@
         if (badge) {
             badge.textContent = count;
         }
- console.log("Cart count updated to: " + count);
+        console.log("Cart count updated to: " + count);
     }
 </script>
 <style>
     .offcanvas.offcanvas-end {
-        background: rgba(255, 255, 255, 0.15); /* semi-transparent white */
-        backdrop-filter: blur(10px);           /* blur for frosted effect */
-        -webkit-backdrop-filter: blur(10px);   /* Safari support */
-        border-left: 1px solid rgba(255, 255, 255, 0.3); /* subtle border */
-        color: #fff; /* white text for contrast, can be adjusted */
+        background: rgba(255, 255, 255, 0.15);
+        /* semi-transparent white */
+        backdrop-filter: blur(10px);
+        /* blur for frosted effect */
+        -webkit-backdrop-filter: blur(10px);
+        /* Safari support */
+        border-left: 1px solid rgba(255, 255, 255, 0.3);
+        /* subtle border */
+        color: #fff;
+        /* white text for contrast, can be adjusted */
     }
 
     .offcanvas-title,
