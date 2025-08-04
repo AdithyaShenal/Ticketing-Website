@@ -83,6 +83,14 @@ include 'db.php';
 
                 <!-- Page Content -->
                 <div class="container-fluid ">
+                    <?php if (isset($_GET['success']) && $_GET['success'] === 'deleted'): ?>
+                        <div class="alert alert-success">User deleted successfully.</div>
+                    <?php elseif (isset($_GET['error']) && $_GET['error'] === 'delete_failed'): ?>
+                        <div class="alert alert-danger">Failed to delete user. Please try again.</div>
+                    <?php elseif (isset($_GET['error']) && $_GET['error'] === 'cannot_delete_self'): ?>
+                        <div class="alert alert-warning">You cannot delete your own admin account.</div>
+                    <?php endif; ?>
+
                     <h1 class="h3 mb-4 text-white">User Management</h1>
 
                     <!-- Tabs -->
@@ -128,7 +136,11 @@ include 'db.php';
                                                     <td><?= htmlspecialchars($row['email']) ?></td>
                                                     <td>
                                                         <a href="edit_admin.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-warning">Edit</a>
-                                                        <a href="delete_user.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-danger">Delete</a>
+                                                        <a href="#"
+                                                            class="btn btn-sm btn-danger btn-delete-user"
+                                                            data-id="<?= $row['id'] ?>"
+                                                            data-name="<?= htmlspecialchars($row['name']) ?>">Delete</a>
+
                                                     </td>
                                                 </tr>
                                             <?php } ?>
@@ -241,6 +253,32 @@ include 'db.php';
             }, 'json').fail(function() {
                 alert('Failed to connect to server.');
             });
+        });
+    </script>
+
+    <script>
+        $(document).on('click', '.btn-delete-user', function(e) {
+            e.preventDefault();
+
+            const userName = $(this).data('name');
+            const userId = $(this).data('id');
+            const row = $(this).closest('tr');
+
+            if (confirm(`Are you sure you want to delete "${userName}"? This action cannot be undone.`)) {
+                $.post('delete_user.php', {
+                    id: userId
+                }, function(res) {
+                    if (res.success) {
+                        row.fadeOut(400, function() {
+                            $(this).remove();
+                        });
+                    } else {
+                        alert('Error: ' + res.message);
+                    }
+                }, 'json').fail(function() {
+                    alert('Server error while deleting user.');
+                });
+            }
         });
     </script>
 
