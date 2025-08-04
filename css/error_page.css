@@ -1,0 +1,40 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  text-align: center;
+  color: #333;
+}
+
+a.btn {
+  text-decoration: none !important;
+  color: white !important;
+}
+
+.error-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.error-image {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.btn-home {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+}
+
+footer {
+  padding: 10px;
+  text-align: left;
+}

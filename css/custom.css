@@ -1,0 +1,26 @@
+body,
+#wrapper,
+#content-wrapper,
+.container-fluid {
+  background-color: #212529 !important;
+  color: #ffffff; /* Make text readable */
+}
+
+.sidebar-custom-color {
+  background-color: #1b1e21 !important; /* Slightly darker than #212529 */
+}
+
+.card {
+  background-color: #2a2d30;
+  color: #fff;
+  border: none;
+}
+
+.card-header {
+  background-color: #343a40;
+  border-bottom: 1px solid #444;
+}
+
+a {
+  text-decoration: none;
+}

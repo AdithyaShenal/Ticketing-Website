@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
         if ($user['role'] == 'admin') {
-            header("Location: admin_dashboard.php");
+            header("Location: charts.php");
         } else {
             header("Location: user_dashboard.php");
         }

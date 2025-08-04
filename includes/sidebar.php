@@ -11,7 +11,7 @@
 
                 if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])):
                     foreach ($_SESSION['cart'] as $item):
-                        $itemTotal = 120 * $item['quantity']; // Replace 120 with dynamic item price if needed
+                        $itemTotal = $item['price'] * $item['quantity'];
                         $subtotal += $itemTotal;
                 ?>
                         <div class="list-group-item d-flex justify-content-between align-items-start" id="cart-item-<?= $item['id'] ?>" data-price="<?= $item['price'] ?>">
