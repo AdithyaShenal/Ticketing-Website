@@ -213,7 +213,6 @@ $upcomingEvents = $pdo->query("
       </div>
       <!-- End of Main Content -->
 
-      <?php include("includes/footer.php"); ?>
     </div>
     <!-- End of Content Wrapper -->
   </div>
