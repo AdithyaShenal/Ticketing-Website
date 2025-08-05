@@ -83,9 +83,6 @@ try {
                     </button>
                     <input type="file" id="photo-upload" accept="image/*" style="display: none;" onchange="previewPhoto(this)">
                 </div>
-                <div style="margin-top: 20px;" class="btn-primary">
-                    <a href="booking.php"><i class="fas fa-history"></i> View Booking History</a>
-                </div>
             </div>
 
             <!-- Right -->
