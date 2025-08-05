@@ -9,10 +9,8 @@ $userRole = $_SESSION['role'] ?? null;
 
 <header class="header">
   <link rel="stylesheet" href="css/styles.css" />
-  <div class="logo">Ticketist</div>
+  <div class="logo"><a href="user_dashboard.php">Ticketist</a></div>
   <nav class="nav">
-    <a href="index.php">Browse events</a>
-
     <?php if ($userRole === "user" && !empty($_SESSION['cart'])): ?>
       <a class="" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" style="position: relative;">
         🛒 Cart
@@ -23,7 +21,10 @@ $userRole = $_SESSION['role'] ?? null;
     <?php endif; ?>
 
     <?php if ($loggedIn): ?>
-        <a href="#">Profile</a>
+        <?php if (isset($_SESSION["role"]) && $_SESSION["role"] === "user"): ?>
+          <a href="booking.php">Booking History</a>
+        <?php endif; ?>
+        <a href="profile.php">Profile</a>
         <a href="logout.php">Logout</a>
     <?php else: ?>
         <a href="login.php">Login</a>

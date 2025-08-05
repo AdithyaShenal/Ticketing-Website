@@ -1,0 +1,52 @@
+body {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+}
+
+.booking-results {
+  min-height: 200px; /* Prevent collapsing */
+}
+
+/* Optional: Style empty state nicely */
+.alert-info {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 30px;
+}
+
+.btn-primary,
+.btn-secondary {
+  color: white !important;
+  text-decoration: none !important;
+}
+
+.card {
+  background-color: #343a40;
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.card-header {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.card + .card {
+  margin-top: 20px;
+}
+.card-header-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #ffc107;
+  color: #000;
+  font-weight: bold;
+  padding: 2px 10px;
+  font-size: 0.8rem;
+  border-radius: 5px;
+}
